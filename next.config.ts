@@ -3,14 +3,10 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
-    serverComponentsExternalPackages: ['@libsql/client', '@prisma/client'],
+    serverActions: true,
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.plugins = [...config.plugins];
-    }
-    return config;
-  },
+  // 针对Cloudflare Pages的优化
+  output: 'export', // 这将生成静态导出，适用于CDN部署
 };
 
 export default nextConfig;
