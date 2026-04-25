@@ -1,12 +1,12 @@
 name = "ai-games-platform"
 compatibility_date = "2024-04-25"
-pages_build_output_dir = ".vercel/output/static"
+pages_build_output_dir = ".next"
 
 # D1 数据库配置
 [[d1_databases]]
 binding = "DB"
 database_name = "ai-games-db"
-database_id = "YOUR_DATABASE_ID"
+database_id = "942fcd86-39cb-49d0-baca-6309aacd78a4"
 
 # 环境变量
 [vars]
