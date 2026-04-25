@@ -6,13 +6,7 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-const prismaClient = global.prisma ?? new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL || 'file:./dev.db',
-    },
-  },
-});
+const prismaClient = global.prisma ?? new PrismaClient();
 
 if (process.env.NODE_ENV !== 'production') {
   global.prisma = prismaClient;
