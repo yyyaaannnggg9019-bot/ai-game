@@ -4,7 +4,8 @@ import prisma from '@/lib/prisma';
 export async function GET(req: NextRequest, { params }: { params: Promise<{ username: string }> }) {
   try {
     const { username } = await params;
-    const user = await prisma.user.findUnique({
+    // 使用findFirst而非findUnique，因为name字段不是唯一的
+    const user = await prisma.user.findFirst({
       where: { name: username },
       select: {
         id: true, name: true, avatar: true, bio: true, createdAt: true,
