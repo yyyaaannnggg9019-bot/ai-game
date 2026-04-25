@@ -29,12 +29,17 @@ export async function POST(req: NextRequest) {
       .setExpirationTime('7d')
       .sign(SECRET);
 
-    const response = NextResponse.json({ id: user.id, name: user.name, token });
+    const response = NextResponse.json({ 
+      id: user.id, 
+      name: user.name, 
+      email: user.email,
+      token 
+    });
 
     response.cookies.set('token', token, {
       httpOnly: true,
       path: '/',
-      maxAge: 7 * 24 * 60 * 60,
+      maxAge: 7 * 24 * 60 * 60, // 7天
       sameSite: 'lax',
     });
 

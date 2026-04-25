@@ -5,12 +5,13 @@ import { SignJWT } from 'jose';
 
 const SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'ai-games-secret-key-2026');
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, { params }: { params: { action: string[] } }) {
   try {
+    const action = params.action?.join('/');
     const body = await req.json();
 
     // Register
-    if (body.action === 'register') {
+    if (action === 'register' && body.action === 'register') {
       const { name, email, password } = body;
       if (!name || !email || !password) {
         return NextResponse.json({ error: '请填写所有字段' }, { status: 400 });
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Login
-    if (body.action === 'login') {
+    if (action === 'login' && body.action === 'login') {
       const { email, password } = body;
       if (!email || !password) {
         return NextResponse.json({ error: '请填写邮箱和密码' }, { status: 400 });
@@ -60,15 +61,16 @@ export async function POST(req: NextRequest) {
       return response;
     }
 
+    // Logout
+    if (action === 'logout') {
+      const response = NextResponse.json({ message: 'logged out' });
+      response.cookies.delete('token');
+      return response;
+    }
+
     return NextResponse.json({ error: '无效操作' }, { status: 400 });
   } catch (err) {
     console.error('Auth error:', err);
     return NextResponse.json({ error: '操作失败' }, { status: 500 });
   }
-}
-
-export async function POST(req: NextRequest) {
-  const response = NextResponse.json({ message: 'logged out' });
-  response.cookies.delete('token');
-  return response;
 }
