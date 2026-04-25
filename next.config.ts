@@ -4,9 +4,9 @@ const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     serverActions: true,
+    // 针对Turbopack的配置
+    turbopack: {},
   },
-  // 针对Cloudflare Pages的优化
-  output: 'export', // 这将生成静态导出，适用于CDN部署
 };
 
 export default nextConfig;
